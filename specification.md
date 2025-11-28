@@ -1,4 +1,5 @@
-<!--- Hugo front matter used to generate the website version of this page:
+---
+# Hugo front matter used to generate the website version of this page:
 title: Open Agent Management Protocol
 linkTitle: OpAMP
 body_class: otel-docs-spec
@@ -8,9 +9,7 @@ path_base_for_github_subdir:
   from: tmp/opamp/index.md
   to: specification.md
 cSpell:ignore: bitmask Flipr Fluentd oneof protoc Rpbjpvc varint
---->
-
-# Open Agent Management Protocol
+---
 
 Status: [Beta]
 
