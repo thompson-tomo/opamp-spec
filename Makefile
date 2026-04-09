@@ -11,25 +11,23 @@ ALL_DOCS := $(shell find . -type f -name '*.md' -not -path './.github/*' -not -p
 all: markdown-toc markdown-link-check markdownlint gen-proto
 
 
-# This target runs markdown-toc on all files that contain
-# a comment <!-- tocstop -->.
+# This target runs doctoc on all files that contain
+# a comment <!-- START doctoc -->.
 #
-# The recommended way to prepate a .md file for markdown-toc is
+# The recommended way to prepate a .md file for doctoc is
 # to add these comments:
 #
-#   <!-- toc -->
-#   <!-- tocstop -->
+#   <!-- START doctoc -->
+#   <!-- END doctoc -->
 .PHONY: markdown-toc
 markdown-toc:
-	@if ! npm ls markdown-toc; then npm ci; fi
-	@for f in $(ALL_DOCS); do \
-		if grep -q '<!-- tocstop -->' $$f; then \
-			echo markdown-toc: processing $$f; \
-			npx --no -- markdown-toc --no-first-h1 --no-stripHeadingTags -i $$f || exit 1; \
-		else \
-			echo markdown-toc: no TOC markers, skipping $$f; \
-		fi; \
-	done
+	@if ! npm ls doctoc; then npm ci --ignore-scripts; fi
+	npx --no -- doctoc . --update-only --mintocitems 1 --toc-pragma-style compact --notitle --minlevel 2 || exit 1;
+
+.PHONY: markdown-toc-check
+markdown-toc-check:
+	@if ! npm ls doctoc; then npm ci --ignore-scripts; fi
+	npx --no -- doctoc . --update-only --mintocitems 1 --toc-pragma-style compact --notitle --minlevel 2 --dryrun || exit 1;
 
 .PHONY: markdown-link-check
 markdown-link-check:
